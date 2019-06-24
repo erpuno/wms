@@ -1,3 +1,3 @@
-WMS: Warehouse Management Systems
-=================================
+WMS: Warehouse Management System
+================================
 
