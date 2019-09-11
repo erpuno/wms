@@ -31,11 +31,17 @@ end
 
 defmodule WMS.Application do
   use Application
+
+  def home(name) do
+     {:ok,[[dir]]} = :init.get_argument(:home)
+     :filename.join(dir,name)
+  end
+
   def env(app) do
     [{:port,       :application.get_env(:n2o,:port,8048)},
-     {:certfile,   '~/depot/synrc/cert/ecc/server.pem'},
-     {:keyfile,    '~/depot/synrc/cert/ecc/server.key'},
-     {:cacertfile, '~/depot/synrc/cert/ecc/caroot.pem'}]
+     {:certfile,   home('depot/synrc/cert/ecc/server.pem')},
+     {:keyfile,    home('depot/synrc/cert/ecc/server.key')},
+     {:cacertfile, home('depot/synrc/cert/ecc/caroot.pem')}]
   end
 
   def start(_, _) do
