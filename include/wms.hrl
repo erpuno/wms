@@ -16,6 +16,7 @@
 -record('Detail', {id,
                    good,
                    volume,
+                   serial,
                    price,
                    placement}).
 
@@ -40,18 +41,18 @@
                  brutto,
                  dim :: dim()}).
 
--record('Good', {id,
-                 name,
-                 type :: productType(),
-                 base_measure_qty,
-                 base_measure_weight,
-                 storage_period,
-                 lifetime,
-                 barcode,
-                 serial,
-                 unit :: #'Unit'{} }).
+-record('Good', {id = kvs:seq([],[]),
+                 name = [],
+                 type = unit :: productType() ,
+                 barcode = [],
+                 base_qty = 1,
+                 base_weight = 1,
+                 serial = [],
+                 class = none,
+                 unit :: #'Unit'{},
+                 ext }).
 
--record('Cell', {id,
+-record('Cell', {id = begin kvs:seq([],[]), timer:sleep(1) end,
                  name,
                  type :: cellType(),
                  barcode,
