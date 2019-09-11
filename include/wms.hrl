@@ -5,7 +5,7 @@
 -type productType() :: unit | weight | weight_unit | unit_weight.
 -type cellType() :: shelf | cell | container | dock | warehouse.
 -type dim() :: {integer(),integer(),integer()}.
--type barcode() :: ean13 | code128.
+-type barcode() :: ean13 | code128 | [].
 
 -record('Report', {id,
                    date,
