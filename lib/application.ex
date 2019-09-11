@@ -31,9 +31,15 @@ end
 
 defmodule WMS.Application do
   use Application
+  def env(app) do
+    [{:port,       :application.get_env(:n2o,:port,8048)},
+     {:certfile,   '~/depot/synrc/cert/ecc/server.pem'},
+     {:keyfile,    '~/depot/synrc/cert/ecc/server.key'},
+     {:cacertfile, '~/depot/synrc/cert/ecc/caroot.pem'}]
+  end
 
   def start(_, _) do
-    :cowboy.start_tls(:http, :n2o_cowboy.env(:wms), %{env: %{dispatch: :n2o_cowboy2.points()}})
+    :cowboy.start_tls(:http, env(:wms), %{env: %{dispatch: :n2o_cowboy2.points()}})
     :n2o.start_ws()
     Supervisor.start_link([], strategy: :one_for_one, name: WMS.Supervisor)
   end
