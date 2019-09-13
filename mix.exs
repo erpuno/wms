@@ -34,7 +34,7 @@ defmodule WMS.Mixfile do
       {:n2o, "~> 6.8.1"},
       {:nitro, "~> 4.7.7"},
       {:cowboy, "~> 2.5.0"},
-      {:rocksdb, "~> 1.2.0"},
+      {:rocksdb, "~> 1.3.2", override: true},
       {:syn, "~> 1.6.3"},
       {:erp, "~> 0.7.17"},
       {:bpe, "~> 4.7.5"},
