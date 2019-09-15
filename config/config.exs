@@ -13,7 +13,7 @@ config :n2o,
   routes: WMS.Routes
 
 config :erp,
-  boot: [:erp_boot, :plm_boot, :acc_boot, :pay_boot, :fin_boot]
+  boot: [:erp_boot, :plm_boot, :acc_boot, :pay_boot, :fin_boot, :wms_boot]
 
 config :kvs,
   dba: :kvs_rocks,

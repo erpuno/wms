@@ -13,19 +13,19 @@
                    cell_out,
                    detail}).
 
--record('Detail', {id,
+-record('Item', {  id,
                    good,
                    volume,
                    serial,
                    price,
                    placement}).
 
--record('Order',  {id,
-                   type :: in | out,
+-record('Order',  {id = begin kvs:seq([],[]), timer:sleep(1) end,
+                   type = in :: in | out,
                    no,
                    date,
                    client :: term(),
-                   goods :: list(#'Detail'{})}).
+                   goods :: list(#'Item'{})}).
 
 % WMS SPEC
 
