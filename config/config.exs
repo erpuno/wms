@@ -28,7 +28,6 @@ config :form,
     BPE.Rows.Trace,
     BPE.Rows.Process,
     WMS.Forms.Error,
-    WMS.Rows.Payment,
-    WMS.Rows.Investment,
-    WMS.Rows.Product
+    WMS.Rows.Order,
+    WMS.Rows.Item
   ]

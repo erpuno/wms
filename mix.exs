@@ -30,13 +30,12 @@ defmodule WMS.Mixfile do
 
   def deps() do
     [
-      {:kvs, "~> 6.7.7"},
       {:n2o, "~> 6.8.1"},
       {:nitro, "~> 4.7.7"},
       {:cowboy, "~> 2.5.0"},
       {:rocksdb, "~> 1.3.2", override: true},
       {:syn, "~> 1.6.3"},
-      {:erp, "~> 0.7.17"},
+      {:erp, "~> 0.9.0"},
       {:bpe, "~> 4.7.5"},
       {:form, "~> 4.7.0"},
       {:ex_doc, "~> 0.11", only: :dev}

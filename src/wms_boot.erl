@@ -1,5 +1,5 @@
 -module(wms_boot).
--include("wms.hrl").
+-include_lib("erp/include/warehouse.hrl").
 -compile(export_all).
 
 boot() ->
@@ -14,14 +14,14 @@ boot() ->
 
   OrdersIn =
   [
-    #'Order'{id=1,goods = [#'Item'{good=1},#'Item'{good=2}]},
-    #'Order'{id=2,goods = [#'Item'{good=2},#'Item'{good=3}]}
+    #'Order'{id=1, no = "20190916-1001", goods = [#'Item'{id=5,good=1},#'Item'{id=6,good=2}]},
+    #'Order'{id=2, no = "20190916-1002", goods = [#'Item'{id=7,good=2},#'Item'{id=8,good=3}]}
   ],
 
   OrdersOut =
   [
-    #'Order'{id=1,type=out,goods = [#'Item'{good=1},#'Item'{good=2}]},
-    #'Order'{id=2,type=out,goods = [#'Item'{good=2},#'Item'{good=3}]}
+    #'Order'{id=1, no = "20190916-2001", type=out,goods = [#'Item'{id=1,good=1},#'Item'{id=2,good=2}]},
+    #'Order'{id=2, no = "20190916-2001", type=out,goods = [#'Item'{id=3,good=2},#'Item'{id=4,good=3}]}
   ],
 
   Cells = [],

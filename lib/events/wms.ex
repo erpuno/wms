@@ -6,61 +6,61 @@ defmodule WMS.Index do
   require ERP
   require Logger
 
-  def accountsHeader() do
+  def ordersHeader() do
     panel(
       id: :header,
       class: :th,
       body: [
-        panel(class: :column33, body: "Account"),
-        panel(class: :column10, body: "Type"),
-        panel(class: :column2, body: "Ballance")
+        panel(class: :column10, body: "Id"),
+        panel(class: :column66, body: "Name"),
+        panel(class: :column10, body: "Price")
       ]
     )
   end
 
-  def txsHeader() do
+  def itemsHeader() do
     panel(
       id: :header,
       class: :th,
       body: [
-        panel(class: :column66, body: "Account"),
-        panel(class: :column10, body: "Amount"),
-        panel(class: :column10, body: "Datetime")
+        panel(class: :column10, body: "Id"),
+        panel(class: :column66, body: "Name"),
+        panel(class: :column10, body: "Total")
       ]
     )
   end
 
-  def pushAccounts(cn) do
-
-     account = ERP."Acc"(id: cn ++ '/local')
-
-     NITRO.insert_bottom(
-        :accountsRow,
-        FIN.Rows.Account.new(FORM.atom([:row, :account, cn]), account)
-      )
-
-     cn
+  def pushOrders(_) do
+     [h|t] = :kvs.feed('/wms/orders/in')
+     for i <- [h|t] do
+       NITRO.insert_bottom(
+         :ordersRow,
+         WMS.Rows.Order.new(FORM.atom([:row, :order, ERP."Order"(i, :id)]), i)
+       )
+     end
+     ERP."Order"(h, :id)
   end
 
-  def pushTxs(cn) do
-
-    for i <- :kvs.feed('/fin/tx/' ++ cn ++ '/local') do
+  def pushItems(order) do
+    {:ok, ERP."Order"(goods: things)} = :kvs.get '/wms/orders/in', order
+    for i <- things do
       NITRO.insert_bottom(
-        :txsRow,
-        FIN.Rows.Transaction.new(FORM.atom([:row, :transaction, cn]), i)
+        :itemsRow,
+        WMS.Rows.Item.new(FORM.atom([:row, :item, ERP."Item"(i, :id)]), i)
       )
     end
 
-    cn
   end
 
   def event(:init) do
     NITRO.clear(:frms)
     NITRO.clear(:ctrl)
-    NITRO.clear(:accountsHead)
-    NITRO.clear(:accountsRow)
-    NITRO.clear(:txsHead)
-    NITRO.clear(:txsRow)
+    NITRO.clear(:ordersHead)
+    NITRO.clear(:itemsHead)
+    NITRO.clear(:ordersRow)
+    NITRO.clear(:itemsRow)
+    NITRO.hide(:items)
+    NITRO.hide(:orders)
 
     case N2O.user() do
       [] ->
@@ -71,17 +71,26 @@ defmodule WMS.Index do
           {:error, 1, "Not authenticated", "User must be authenticated in order to view account and transactions"}
         )
 
-      ERP."Employee"(person: ERP."Person"(cn: id)) ->
-        send self(), {:direct, {:txs, id} }
+      ERP."Employee"(person: ERP."Person"(cn: name)) ->
+         send self(), {:direct, {:all, name} }
     end
   end
 
-  def event({:txs, id}) do
-    NITRO.insert_top(:accountsHead, WMS.Index.accountsHeader())
-    NITRO.insert_top(:txsHead, WMS.Index.txsHeader())
-    NITRO.update(:num, span(body: KVS.Index.parse(N2O.user())))
+  def event({:all, cn}) do
+    NITRO.show(:items)
+    NITRO.show(:orders)
+    NITRO.clear(:itemsHead)
+    NITRO.clear(:ordersHead)
+    NITRO.insert_top(:ordersHead, WMS.Index.ordersHeader())
+    NITRO.insert_top(:itemsHead, WMS.Index.itemsHeader())
     NITRO.hide(:frms)
-    id |> pushAccounts |> pushTxs
+    cn |> pushOrders |> pushItems
+  end
+
+  def event({:order, id}) do
+    NITRO.clear(:itemsRow)
+    NITRO.hide(:frms)
+    id |> pushItems
   end
 
   def event({:off, _}), do: NITRO.redirect("ldap.htm")
