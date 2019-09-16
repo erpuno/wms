@@ -20,21 +20,21 @@ boot() ->
                 #'Order'{id=2002, no = "20190916-2001", type=out},
                 #'Order'{id=2003, no = "20190916-2001", type=out},
                 #'Order'{id=2004, no = "20190916-2002", type=out}],
-  Structure = [ {"/wms/goods",       Goods},
-                {"/wms/orders/in",   OrdersIn},
-                {"/wms/orders/out",  OrdersOut},
-                {"/wms/cells",       Cells},
-                {"/wms/in/1001",     Items1},
-                {"/wms/in/1002",     Items2},
-                {"/wms/in/1003",     Items3},
-                {"/wms/in/1004",     Items4},
-                {"/wms/out/2001",    Items1},
-                {"/wms/out/2002",    Items2},
-                {"/wms/out/2003",    Items3},
-                {"/wms/out/2004",    Items4}  ],
+  Database = [ {"/wms/goods",       Goods},
+               {"/wms/orders/in",   OrdersIn},
+               {"/wms/orders/out",  OrdersOut},
+               {"/wms/cells",       Cells},
+               {"/wms/in/1001",     Items1},
+               {"/wms/in/1002",     Items2},
+               {"/wms/in/1003",     Items3},
+               {"/wms/in/1004",     Items4},
+               {"/wms/out/2001",    Items1},
+               {"/wms/out/2002",    Items2},
+               {"/wms/out/2003",    Items3},
+               {"/wms/out/2004",    Items4}  ],
   lists:foreach(fun({Feed, Data}) ->
         case kvs:get(writer, Feed) of
              {ok,_} -> skip;
           {error,_} -> lists:map(fun(X) ->
                        kvs:append(X,Feed) end, Data) end
-                  end, Structure).
+                  end, Database).
