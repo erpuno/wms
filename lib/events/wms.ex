@@ -43,7 +43,7 @@ defmodule WMS.Index do
   end
 
   def pushItems(order) do
-    {:ok, ERP."Order"(goods: things)} = :kvs.get '/wms/orders/in', order
+    things = :kvs.all '/wms/in/' ++ NITRO.compact(order)
     for i <- things do
       NITRO.insert_bottom(
         :itemsRow,

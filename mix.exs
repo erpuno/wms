@@ -4,7 +4,7 @@ defmodule WMS.Mixfile do
   def project() do
     [
       app: :wms,
-      version: "0.9.1",
+      version: "0.9.2",
       elixir: "~> 1.7",
       description: "WMS Warehouse Management System",
       package: package(),
