@@ -63,11 +63,8 @@ defmodule BPE.Index do
 
   def event({:spawn, _}) do
     atom = 'process_type_pi_Elixir.BPE.Forms.Create' |> NITRO.q() |> NITRO.to_atom()
-    start = :bpe.start(atom.def(), [])
-    IO.inspect atom
-    IO.inspect start
     id =
-      case start do
+      case :bpe.start(atom.def(), []) do
         {:error, i} -> i
         {:ok, i} -> i
       end

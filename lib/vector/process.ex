@@ -15,7 +15,6 @@ defmodule BPE.Rows.Process do
 
   def new(name, proc) do
     pid = process(proc, :id)
-    IO.inspect proc
     panel(
       id: FORM.atom([:tr, name]),
       class: :td,
