@@ -36,7 +36,7 @@ defmodule WMS.Mixfile do
       {:rocksdb, "~> 1.3.2"},
       {:syn, "~> 1.6.3"},
       {:erp, "~> 0.9.2"},
-      {:bpe, "~> 4.9.0"},
+      {:bpe, "~> 4.9.1"},
       {:form, "~> 4.7.0"},
       {:ex_doc, "~> 0.11", only: :dev}
     ]

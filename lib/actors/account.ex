@@ -65,5 +65,5 @@ defmodule BPE.Account do
   end
 
   def action({:request, :Upload}, proc), do: {:reply, proc}
-  def action({:request, :Final}, proc), do: {:reply, proc}
+  def action(_, proc), do: {:reply, proc}
 end
