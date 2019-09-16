@@ -13,9 +13,8 @@ defmodule WMS.Rows.Item do
 
   def id(), do: ERP."Item"(id: 0, volume: {0, 1}, price: {0,1}, good: 1)
 
-  def new(name, ERP."Item"(id: n, price: p, volume: v, good: thing)) do
+  def new(_, ERP."Item"(id: n, price: p, volume: v, good: thing)) do
     {s, m} = :dec.mul(p, v)
-    {p1,p2} = p
 
     good = case :kvs.get('/wms/goods', thing) do
         {:ok,x} -> x
