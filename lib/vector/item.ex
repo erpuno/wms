@@ -16,7 +16,11 @@ defmodule WMS.Rows.Item do
   def new(name, ERP."Item"(id: n, price: p, volume: v, good: thing)) do
     {s, m} = :dec.mul(p, v)
     {p1,p2} = p
-     {:ok, good} = :kvs.get('/wms/goods', thing)
+
+    good = case :kvs.get('/wms/goods', thing) do
+        {:ok,x} -> x
+            _ -> id()
+    end
 
     panel(
       id: FORM.atom([:tr, NITRO.to_list(thing)]),
