@@ -11,7 +11,7 @@ defmodule WMS.Rows.Item do
       "This is the order item representation. " <>
         "Used to draw the items in the order cart"
 
-  def id(), do: ERP."Item"(volume: {0, 1}, price: {0,1})
+  def id(), do: ERP."Item"(id: 0, volume: {0, 1}, price: {0,1}, good: 1)
 
   def new(name, ERP."Item"(id: n, price: p, volume: v, good: thing)) do
     {s, m} = :dec.mul(p, v)

@@ -11,7 +11,7 @@ defmodule WMS.Rows.Order do
       "This is the warehouse order representation. " <>
         "Used to draw the in/out order"
 
-  def id(), do: ERP."Order"(id: "xxx")
+  def id(), do: ERP."Order"(id: 2001, no: '20190916-2001', date: :os.timestamp(), type: :none, status: :filled)
 
   def new(name, ERP."Order"(id: i, no: no, date: d, type: t, status: stat)) do
     panel(
