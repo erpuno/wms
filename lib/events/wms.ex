@@ -24,7 +24,7 @@ defmodule WMS.Index do
       class: :th,
       body: [
         panel(class: :column10, body: "Id"),
-        panel(class: :column66, body: "Name"),
+        panel(class: :column80, body: "Name"),
         panel(class: :column10, body: "Total")
       ]
     )
@@ -90,7 +90,8 @@ defmodule WMS.Index do
   def event({:order, id}) do
     {:ok, order} = :kvs.get '/wms/orders/in', id
     NITRO.update(:num, h3(id: :num, body: NITRO.compact(ERP."Order"(order, :no))))
-    NITRO.update(:mod, p(id: :mod, body: ["This order is not yet in process. You can ", link(class: [:button,:sgreen], body: "SEND", postback: {:process, id}), " it."]))
+    NITRO.update(:mod, p(id: :mod, body: ["This order is not yet in process. You can ",
+                     link(class: [:button,:sgreen], body: "SEND", postback: {:process, id}), " it."]))
     NITRO.clear(:itemsRow)
     NITRO.hide(:frms)
     id |> pushItems

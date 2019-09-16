@@ -60,7 +60,7 @@ input:focus, select:focus { border: 1px solid #3D9CEC; outline: none; box-shadow
 input[type="radio"], input[type="checkbox"] { width: auto; }
 
 /*Columns*/
-.column33,.column67,.column6,.column,.column2,.column3,
+.column33,.column66,.column6,.column,.column2,.column3,.column80,
 .column14,.column12,.column10,.column20,.column0 { float: left; }
 
 .column14 { width: 14%;}
@@ -68,7 +68,8 @@ input[type="radio"], input[type="checkbox"] { width: auto; }
 .column10 { width: 10%;}
 .column20 { width: 20%;}
 .column33 { width: 33%;}
-.column67 { width: 67%;}
+.column66 { width: 66%;}
+.column80 { width: 80%;}
 .column6  { width: 16.66%;}
 .column3  { width: 33.33%; }
 .column2  { width: 50%; }
@@ -115,6 +116,7 @@ input[type="radio"], input[type="checkbox"] { width: auto; }
 .td { background-color: inherit; color: #333; }
 .table .column2,
 .table .column66,
+.table .column80,
 .table .column33,
 .table .column14,
 .table .column12,

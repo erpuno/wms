@@ -5,7 +5,7 @@
 boot() ->
   Goods =
   [
-    #'Good'{ id=1, name = "Homotopy Type Theory. Volumes I,II.", base_qty = 2, class = book },
+    #'Good'{ id=1, name = "Homotopy Type Theory. Vol. I,II", base_qty = 2, class = book },
     #'Good'{ id=2, name = "Keycaps HHKB Red", base_qty = 54, class = components },
     #'Good'{ id=3, name = "Sony VAIO Z 2010", class = computer },
     #'Good'{ id=4, name = "MacBook Air 2013", serial = "1234", class = computer },

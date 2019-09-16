@@ -27,7 +27,7 @@ defmodule WMS.Rows.Item do
           body: NITRO.compact(n)
         ),
         panel(
-          class: :column66,
+          class: :column80,
           body: ERP."Good"(good, :name)
         ),
         panel(
