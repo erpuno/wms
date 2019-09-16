@@ -88,6 +88,9 @@ defmodule WMS.Index do
   end
 
   def event({:order, id}) do
+    {:ok, order} = :kvs.get '/wms/orders/in', id
+    NITRO.update(:num, h3(id: :num, body: NITRO.compact(ERP."Order"(order, :no))))
+    NITRO.update(:mod, p(id: :mod, body: ["This order is not yet in process. You can ", link(class: [:button,:sgreen], body: "SEND", postback: {:process, id}), " it."]))
     NITRO.clear(:itemsRow)
     NITRO.hide(:frms)
     id |> pushItems
