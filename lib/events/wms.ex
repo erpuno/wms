@@ -13,7 +13,8 @@ defmodule WMS.Index do
       body: [
         panel(class: :column10, body: "Id"),
         panel(class: :column66, body: "Name"),
-        panel(class: :column10, body: "Price")
+        panel(class: :column10, body: "Price"),
+        panel(class: :column10, body: "Status")
       ]
     )
   end

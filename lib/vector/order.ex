@@ -13,7 +13,7 @@ defmodule WMS.Rows.Order do
 
   def id(), do: ERP."Order"(id: "xxx")
 
-  def new(name, ERP."Order"(id: i, no: no, date: d, type: t)) do
+  def new(name, ERP."Order"(id: i, no: no, date: d, type: t, status: stat)) do
     panel(
       id: FORM.atom([:tr, NITRO.to_list(name)]),
       class: :td,
@@ -32,7 +32,11 @@ defmodule WMS.Rows.Order do
         ),
         panel(
           class: :column10,
-          body: NITRO.compact(d)
+          body: "0"
+        ),
+        panel(
+          class: :column10,
+          body: NITRO.compact(stat)
         )
       ]
     )

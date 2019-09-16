@@ -1,5 +1,4 @@
 -module(wms).
--include("wms.hrl").
 -compile(export_all).
 -behaviour(application).
 -behaviour(supervisor).
