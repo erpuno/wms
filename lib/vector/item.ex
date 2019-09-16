@@ -32,7 +32,7 @@ defmodule WMS.Rows.Item do
         ),
         panel(
           class: :column80,
-          body: ERP."Good"(good, :name)
+          body: '<nobr>' ++ ERP."Good"(good, :name) ++ '</nobr>'
         ),
         panel(
           class: :column10,
