@@ -27,7 +27,7 @@ defmodule WMS.Rows.Order do
           body:
            link(
               body: NITRO.compact(no),
-              postback: {:order, i}
+              postback: {:items, i}
             )
         ),
         panel(

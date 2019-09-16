@@ -32,14 +32,12 @@ defmodule WMS.Index do
   end
 
   def pushOrders(_) do
-     [h|t] = :kvs.feed('/wms/orders/in')
-     for i <- [h|t] do
+     for i <- :kvs.feed('/wms/orders/in') do
        NITRO.insert_bottom(
          :ordersRow,
          WMS.Rows.Order.new(FORM.atom([:row, :order, ERP."Order"(i, :id)]), i)
        )
      end
-     ERP."Order"(h, :id)
   end
 
   def pushItems(order) do
@@ -73,22 +71,22 @@ defmodule WMS.Index do
         )
 
       ERP."Employee"(person: ERP."Person"(cn: name)) ->
-         send self(), {:direct, {:all, name} }
+         send self(), {:direct, {:orders, name} }
     end
   end
 
-  def event({:all, cn}) do
-    NITRO.show(:items)
+  def event({:orders, cn}) do
     NITRO.show(:orders)
-    NITRO.clear(:itemsHead)
     NITRO.clear(:ordersHead)
     NITRO.insert_top(:ordersHead, WMS.Index.ordersHeader())
-    NITRO.insert_top(:itemsHead, WMS.Index.itemsHeader())
     NITRO.hide(:frms)
-    cn |> pushOrders |> pushItems
+    cn |> pushOrders
   end
 
-  def event({:order, id}) do
+  def event({:items, id}) do
+    NITRO.show(:items)
+    NITRO.clear(:itemsHead)
+    NITRO.insert_top(:itemsHead, WMS.Index.itemsHeader())
     {:ok, order} = :kvs.get '/wms/orders/in', id
     NITRO.update(:num, h3(id: :num, body: NITRO.compact(ERP."Order"(order, :no))))
     NITRO.update(:mod, p(id: :mod, body: ["This order is not yet in process. You can ",
