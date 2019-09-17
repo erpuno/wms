@@ -34,12 +34,12 @@ defmodule BPE.Forms.Create do
           title: "Type",
           tooltips: [],
           options: [
-            opt(name: BPE.Account, title: "Client Acquire [QUANTERALL]"),
-            opt(name: BPE.Account, title: "Client Tracking [QUANTERALL]"),
+            opt(name: WMS.Placement, title: "Walking"),
+            opt(name: WMS.Placement, title: "Mobile Cart"),
             opt(
-              name: BPE.Account,
+              name: WMS.Placement,
               checked: true,
-              title: "Client Account [SYNRC BANK]"
+              title: "Copter"
             )
           ]
         )
