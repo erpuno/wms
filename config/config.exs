@@ -1,5 +1,8 @@
 use Mix.Config
 
+config :bpe,
+  procmodules: [:bpe, :bpe_account, :"Elixir.WMS.Placement"]
+
 config :n2o,
   pickler: :n2o_secret,
   mq: :n2o_syn,
