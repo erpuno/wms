@@ -42,8 +42,9 @@ defmodule WMS.Placement do
       ],
       beginEvent: :Created,
       endEvent: :Final,
-      events: [BPE.messageEvent(name: :AsyncEvent),
-               BPE.boundaryEvent(name: :"*", timeout: {0,{0,0,10}})]
+      events: [ BPE.messageEvent(name: :AsyncEvent)
+              , BPE.boundaryEvent(name: :"*", timeout: {0,{0,0,10}})
+              ]
     )
   end
 
