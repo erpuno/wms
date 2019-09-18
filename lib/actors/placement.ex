@@ -9,7 +9,7 @@ defmodule WMS.Placement do
 
   def def() do
     BPE.process(
-      name: [],
+      name: :n2o.user(),
       flows: [
         BPE.sequenceFlow(source: :Created, target: :Main),
         BPE.sequenceFlow(source: :Main,    target: :Final),
@@ -30,7 +30,7 @@ defmodule WMS.Placement do
   end
 
   def action({:request, :Main}, proc) do
-    {:reply, :Main, BPE.process(proc, docs: [placement(path: "/wms/cells/1/2/3", item: 1)])}
+    {:reply, :Main, BPE.process(proc, docs: [placement(path: '/wms/cells/1/2/3', item: 1)])}
   end
 
   def action({:request, :Final}, proc) do
