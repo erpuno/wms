@@ -1,15 +1,14 @@
-dist/search_items-d4ef7ce648.js
+dist/search_items-8106aad0ab.js
 dist/html-de2388dc2f8074b0a4db.css
 dist/html-de2388dc2f8074b0a4db.js
 dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/sidebar_items-4647e80f1b.js
+dist/sidebar_items-ef96f9775f.js
 api-reference.html
 search.html
 404.html
-BPE.Account.html
 BPE.Actor.html
 BPE.Forms.Create.html
 BPE.Index.html
@@ -25,6 +24,7 @@ WMS.Application.html
 WMS.Cells.html
 WMS.Forms.Error.html
 WMS.Index.html
+WMS.Placement.html
 WMS.Routes.html
 WMS.Rows.Item.html
 WMS.Rows.Order.html

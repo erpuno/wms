@@ -44,16 +44,14 @@ defmodule BPE.Index do
     for BPE.process(id: i) <-
           Enum.filter(
             KVS.feed('/bpe/proc'),
-            fn BPE.process(name: n) -> n == :n2o.user() end
+            fn BPE.process(name: n) -> :true end
           ) do
       NITRO.insert_bottom(:tableRow, BPE.Rows.Process.new(FORM.atom([:row, i]), :bpe.load(i)))
     end
   end
 
-  def event({:complete, id}) do
-    p = :bpe.load(id)
-    :bpe.start(p, [])
-    :bpe.complete(id)
+  def event({:complete, id, name}) do
+    :bpe.amend(id, {:order, name})
 
     NITRO.update(
       FORM.atom([:tr, :row, id]),
@@ -61,10 +59,11 @@ defmodule BPE.Index do
     )
   end
 
-  def event({:spawn, _}) do
+  def event({:spawn, x}) do
     atom = 'process_type_pi_Elixir.BPE.Forms.Create' |> NITRO.q() |> NITRO.to_atom()
+    proc = BPE.process(atom.def(), name: :n2o.user())
     id =
-      case :bpe.start(atom.def(), []) do
+      case :bpe.start(proc, []) do
         {:error, i} -> i
         {:ok, i} -> i
       end

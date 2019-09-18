@@ -33,6 +33,7 @@ defmodule BPE.Rows.Process do
             case process(proc, :name) do
               [] -> []
               ERP."Employee"(person: ERP."Person"(cn: cn)) -> cn
+              x -> NITRO.compact(x)
             end
         ),
         panel(
@@ -68,7 +69,7 @@ defmodule BPE.Rows.Process do
               _ ->
                 [
                   link(
-                    postback: {:complete, process(proc, :id)},
+                    postback: {:complete, process(proc, :id), process(proc, :name)},
                     class: [:button, :sgreen],
                     body: "Go",
                     source: [],

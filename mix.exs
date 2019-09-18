@@ -35,8 +35,8 @@ defmodule WMS.Mixfile do
       {:cowboy, "~> 2.5.0"},
       {:rocksdb, "~> 1.3.2"},
       {:syn, "~> 1.6.3"},
-      {:erp, "~> 0.9.2"},
-      {:bpe, "~> 4.9.1"},
+      {:erp, "~> 0.9.3"},
+      {:bpe, "~> 4.9.3"},
       {:form, "~> 4.7.0"},
       {:ex_doc, "~> 0.11", only: :dev}
     ]

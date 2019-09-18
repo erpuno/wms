@@ -1,7 +1,7 @@
 defmodule WMS.Index do
   use N2O, with: [:n2o, :nitro]
   use FORM, with: [:form]
-  use BPE
+  require BPE
   require KVS
   require ERP
   require Logger
@@ -95,7 +95,10 @@ defmodule WMS.Index do
     NITRO.hide(:frms)
     id |> pushItems
   end
-
+  def event({:process, id}) do
+    {:ok, x} = :bpe.start(BPE.process(WMS.Placement.def(),name: id),[{:created}])
+    :bpe.complete x
+  end
   def event({:off, _}), do: NITRO.redirect("ldap.htm")
   def event(_), do: []
 end

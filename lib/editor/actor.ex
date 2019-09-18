@@ -7,7 +7,7 @@ defmodule BPE.Forms.Create do
   def doc(), do: "Dialog for creation of BPE processes."
   def id(), do: {:pi, []}
 
-  def new(name, {:pi, _code}) do
+  def new(name, {:pi, _}) do
     document(
       name: FORM.atom([:pi, name]),
       sections: [sec(name: "New process: ")],
