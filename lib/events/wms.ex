@@ -31,8 +31,8 @@ defmodule WMS.Index do
     )
   end
 
-  def pushOrders(_) do
-     for i <- :kvs.feed('/wms/orders/in') do
+  def pushOrders(_, type) do
+     for i <- :kvs.feed '/wms/orders/' ++ NITRO.compact(type) do
        NITRO.insert_bottom(
          :ordersRow,
          WMS.Rows.Order.new(FORM.atom([:row, :order, ERP."Order"(i, :id)]), i)
@@ -40,9 +40,8 @@ defmodule WMS.Index do
      end
   end
 
-  def pushItems(order) do
-    things = :kvs.all '/wms/in/' ++ NITRO.compact(order)
-    for i <- things do
+  def pushItems(order, type) do
+    for i <- :kvs.all :lists.concat(['/wms/',type,'/',order]) do
       NITRO.insert_bottom(
         :itemsRow,
         WMS.Rows.Item.new(FORM.atom([:row, :item, ERP."Item"(i, :id)]), i)
@@ -70,33 +69,41 @@ defmodule WMS.Index do
           {:error, 1, "Not authenticated", "User must be authenticated in order to view account and transactions"}
         )
 
-      ERP."Employee"(person: ERP."Person"(cn: name)) ->
-         send self(), {:direct, {:orders, name} }
+      ERP."Employee"(role: role, person: ERP."Person"(cn: name)) ->
+         send self(), {:direct, {:orders, name, role} }
     end
   end
 
-  def event({:orders, cn}) do
+  def event({:orders, cn, role}) do
     NITRO.show(:orders)
     NITRO.clear(:ordersHead)
     NITRO.insert_top(:ordersHead, WMS.Index.ordersHeader())
     NITRO.hide(:frms)
-    cn |> pushOrders
+    case role do
+      :admin -> cn |> pushOrders(:in) |> pushOrders(:out)
+      :warehouse_manager -> cn |> pushOrders(:in)
+      :supply_manager -> cn |> pushOrders(:out)
+      _ -> :skip
+    end
   end
 
-  def event({:items, id}) do
+  def event({:items, id, type}) do
     NITRO.show(:items)
     NITRO.clear(:itemsHead)
     NITRO.insert_top(:itemsHead, WMS.Index.itemsHeader())
-    {:ok, order} = :kvs.get '/wms/orders/in', id
+    {:ok, order} = :kvs.get '/wms/orders/' ++ NITRO.compact(type), id
     NITRO.update(:num, h3(id: :num, body: NITRO.compact(ERP."Order"(order, :no))))
     NITRO.update(:mod, p(id: :mod, body: ["This order is not yet in process. You can ",
-                     link(class: [:button,:sgreen], body: "SEND", postback: {:process, id}), " it."]))
+                     link(class: [:button,:sgreen], body: "SEND", postback: {:process, id, type}), " it."]))
     NITRO.clear(:itemsRow)
     NITRO.hide(:frms)
-    id |> pushItems
+    id |> pushItems(type)
   end
-  def event({:process, id}) do
-    {:ok, x} = :bpe.start(BPE.process(WMS.Placement.def(),name: id),[{:created}])
+  def event({:process, id, type}) do
+    {:ok, x} =  case type do
+        :in -> :bpe.start(BPE.process(WMS.Placement.def(),name: id),[{:placement}])
+        :out -> :bpe.start(BPE.process(WMS.Allocation.def(),name: id),[{:allocation}])
+    end
     :bpe.complete x
   end
   def event({:off, _}), do: NITRO.redirect("ldap.htm")

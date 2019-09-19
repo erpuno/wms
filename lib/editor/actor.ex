@@ -34,12 +34,12 @@ defmodule BPE.Forms.Create do
           title: "Type",
           tooltips: [],
           options: [
-            opt(name: WMS.Placement, title: "Walking"),
-            opt(name: WMS.Placement, title: "Mobile Cart"),
+            opt(name: WMS.Placement, title: "Placement"),
+            opt(name: WMS.Allocation, title: "Allocation"),
             opt(
               name: WMS.Placement,
               checked: true,
-              title: "Copter"
+              title: "Report"
             )
           ]
         )

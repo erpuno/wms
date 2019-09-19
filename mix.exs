@@ -4,7 +4,7 @@ defmodule WMS.Mixfile do
   def project() do
     [
       app: :wms,
-      version: "0.9.4",
+      version: "0.9.5",
       elixir: "~> 1.7",
       description: "WMS Warehouse Management System",
       package: package(),
@@ -35,7 +35,7 @@ defmodule WMS.Mixfile do
       {:cowboy, "~> 2.5.0"},
       {:rocksdb, "~> 1.3.2"},
       {:syn, "~> 1.6.3"},
-      {:erp, "~> 0.9.3"},
+      {:erp, "~> 0.9.4"},
       {:bpe, "~> 4.9.4"},
       {:form, "~> 4.7.0"},
       {:ex_doc, "~> 0.11", only: :dev}

@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :bpe,
-  procmodules: [:bpe, :bpe_account, WMS.Index, WMS.Placement]
+  procmodules: [:bpe, :bpe_account, WMS.Index, WMS.Placement, WMS.Allocation]
 
 config :n2o,
   pickler: :n2o_secret,

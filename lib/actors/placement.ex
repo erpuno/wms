@@ -1,6 +1,6 @@
 defmodule WMS.Placement do
   @moduledoc """
-  `WMS.Placement` is a process that handles cart delivery to/from cells.
+  `WMS.Placement` is a process that handles cart delivery placement from acquiring to cells.
   """
   require KVS
   require ERP
