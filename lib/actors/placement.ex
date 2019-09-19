@@ -2,6 +2,7 @@ defmodule WMS.Placement do
   @moduledoc """
   `WMS.Placement` is a process that handles cart delivery to/from cells.
   """
+  require KVS
   require ERP
   require BPE
   require Record
@@ -60,8 +61,11 @@ defmodule WMS.Placement do
          case findPlacement id do
                {[],_,_} -> {:reply, :Final, BPE.process(proc, docs: [{:close}])}
           {item,feed,_} ->
-              :kvs.append ERP."Item"(item, status: :placed), feed
-              place = placement(path: allocateCell(item), item: item)
+              path  = allocateCell(item)
+              place = placement(path: path, item: item)
+              item  = ERP."Item"(item, status: :placed)
+              :kvs.append item, feed
+              :kvs.append item, path
               {:reply, :Main, BPE.process(proc, docs: [place])}
          end
       [] -> {:reply, :Main, proc}

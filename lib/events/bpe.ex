@@ -51,6 +51,7 @@ defmodule BPE.Index do
   end
 
   def event({:complete, id, name}) do
+    id |> :bpe.load |> :bpe.start []
     :bpe.amend(id, {:order, name})
 
     NITRO.update(
