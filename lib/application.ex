@@ -45,6 +45,7 @@ defmodule WMS.Application do
   end
 
   def start(_, _) do
+    :bpe_otp.respawn
     :cowboy.start_tls(:http, env(:wms), %{env: %{dispatch: :n2o_cowboy2.points()}})
     :n2o.start_ws()
     Supervisor.start_link([], strategy: :one_for_one, name: WMS.Supervisor)
