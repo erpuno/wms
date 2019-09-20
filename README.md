@@ -5,12 +5,12 @@ The WMS in essense is a multidimentional indexed storage
 of goods in different forms of measurement with 2 main
 business process: Placement and Allocation.
 
-Placemenet process is a route of delivery of cart
+'Placemenet' process is a route of delivery of cart
 items of input order. Each step of this process in trace
 corresponds to placment of one or multiple items from
 cart to cell storage.
 
-Allocation is an opposite process of satisfying supply
+'Allocation' is an opposite process of satisfying supply
 output order by completion the route of allocations —
 transfers from cell storage to cart.
 
