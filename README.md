@@ -20,6 +20,7 @@ Prerequisites
 * Windows, Linux or Mac
 * Erlang 22.1
 * Elixir 1.9.1
+* CMake 3.15
 
 Setup Certificates
 ------------------
