@@ -14,6 +14,13 @@ Allocation is an opposite process of satisfying supply
 output order by completion the route of allocations ---
 transfers from cell storage to cart.
 
+Prerequisites
+-------------
+
+* Windows, Linux or Mac
+* Erlang 22.1
+* Elixir 1.9.1
+
 Setup Certificates
 ------------------
 
@@ -25,14 +32,18 @@ by running synrc `mad` tool from `~/depot/synrc` folder.
 ```
 $ mkdir -p ~/depot/synrc
 $ cd ~/depot/synrc
-$ mad ecc server $UNIQUE-NAME
+$ mad ecc server $UNIQUE
 $ cd cert/ecc
-$ mmv $UNIQUE-NAME\* server\#1
+$ mmv $UNIQUE\* server\#1
 ```
 
-Please note that `$UNIQUE-NAME` placeholder should contain
+Please note that `$UNIQUE` placeholder should contain
 unique common name (CN) to be registered at CA otherwise
 CSR request will fail.
+
+```
+$ export UNIQUE=<Common Name>
+```
 
 Build and Run
 -------------
