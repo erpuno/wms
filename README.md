@@ -40,8 +40,8 @@ Setup Certificates
 
 The web server expects three files `~/depot/synrc/cert/ecc/server.pem`,
 `~/depot/synrc/cert/ecc/server.key` and `~/depot/synrc/cert/ecc/caroot.pem`.
-In order to obtain them you must issue CSR request to <a href="https://ca.n2o.space">SYNRC CA</a>
-by running <a href="https://mad.n2o.space">SYNRC MAD</a> tool from `~/depot/synrc` folder.
+In order to obtain them you must issue CSR request to <a href="https://ca.n2o.space">SYNRC&nbsp;CA</a>
+by running <a href="https://mad.n2o.space">SYNRC&nbsp;MAD</a> tool from `~/depot/synrc` folder.
 
 ```sh
 $ mkdir -p ~/depot/synrc
