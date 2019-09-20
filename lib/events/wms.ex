@@ -100,7 +100,7 @@ defmodule WMS.Index do
     id |> pushItems(type)
   end
   def event({:process, id, type}) do
-    {:ok, x} =  case type do
+    {:ok, x} = case type do
         :in -> :bpe.start(BPE.process(WMS.Placement.def(),name: id),[{:placement}])
         :out -> :bpe.start(BPE.process(WMS.Allocation.def(),name: id),[{:allocation}])
     end
