@@ -11,7 +11,7 @@ corresponds to placment of one or multiple items from
 cart to cell storage.
 
 Allocation is an opposite process of satisfying supply
-output order by completion the route of allocations ---
+output order by completion the route of allocations —
 transfers from cell storage to cart.
 
 Prerequisites
