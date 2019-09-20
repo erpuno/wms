@@ -65,9 +65,6 @@ defmodule WMS.Allocation do
     case :bpe.doc({:order}, proc) do
       {:order, id} ->
         case findPlacement(id) do
-          [] ->
-            {:reply, :Main, proc}
-
           {[], _, _} ->
             {:reply, :Final, BPE.process(proc, docs: [{:close}])}
 
