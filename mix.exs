@@ -23,9 +23,7 @@ defmodule WMS.Mixfile do
   end
 
   def application() do
-    [ mod: {WMS.Application, []},
-      applications: [:syn, :form, :nitro, :ranch, :cowboy, :rocksdb, :kvs, :erp, :bpe, :n2o]
-    ]
+    [mod: {WMS.Application, []}, applications: [:syn, :form, :nitro, :ranch, :cowboy, :rocksdb, :kvs, :erp, :bpe, :n2o]]
   end
 
   def deps() do

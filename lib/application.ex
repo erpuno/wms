@@ -33,19 +33,21 @@ defmodule WMS.Application do
   use Application
 
   def home(name) do
-     {:ok,[[dir]]} = :init.get_argument(:home)
-     :filename.join(dir,name)
+    {:ok, [[dir]]} = :init.get_argument(:home)
+    :filename.join(dir, name)
   end
 
   def env(app) do
-    [{:port,       :application.get_env(:n2o,:port,8048)},
-     {:certfile,   home('depot/synrc/cert/ecc/server.pem')},
-     {:keyfile,    home('depot/synrc/cert/ecc/server.key')},
-     {:cacertfile, home('depot/synrc/cert/ecc/caroot.pem')}]
+    [
+      {:port, :application.get_env(:n2o, :port, 8048)},
+      {:certfile, home('depot/synrc/cert/ecc/server.pem')},
+      {:keyfile, home('depot/synrc/cert/ecc/server.key')},
+      {:cacertfile, home('depot/synrc/cert/ecc/caroot.pem')}
+    ]
   end
 
   def start(_, _) do
-    :bpe_otp.respawn
+    :bpe_otp.respawn()
     :cowboy.start_tls(:http, env(:wms), %{env: %{dispatch: :n2o_cowboy2.points()}})
     :n2o.start_ws()
     Supervisor.start_link([], strategy: :one_for_one, name: WMS.Supervisor)

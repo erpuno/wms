@@ -25,7 +25,7 @@ defmodule WMS.Rows.Order do
         panel(
           class: :column66,
           body:
-           link(
+            link(
               body: NITRO.compact(no),
               postback: {:items, i, t}
             )
