@@ -83,7 +83,7 @@ defmodule WMS.Allocation do
 
   def action({:request, :Final}, proc) do
     IO.inspect("FINAL")
-    {:stop, BPE.process(proc, docs: [{:close}])}
+    {:stop, proc}
   end
 
   def action(_, proc), do: {:reply, proc}
