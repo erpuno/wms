@@ -65,7 +65,7 @@ defmodule BPE.Index do
     proc = BPE.process(atom.def(), name: :n2o.user())
 
     id =
-      case :bpe.start(proc, []) do
+      case :bpe.start(proc, [{:order,x}]) do
         {:error, i} -> i
         {:ok, i} -> i
       end

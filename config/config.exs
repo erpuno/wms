@@ -1,7 +1,17 @@
 use Mix.Config
 
 config :bpe,
-  procmodules: [:bpe, :bpe_account, WMS.Index, WMS.Placement, WMS.Allocation]
+  procmodules: [:bpe, :bpe_account, WMS.Index, WMS.Placement, WMS.Allocation],
+  logger_level: :debug,
+  logger: [{:handler, :synrc, :logger_std_h,
+            %{level: :debug,
+              id: :synrc,
+              max_size: 2000,
+              module: :logger_std_h,
+              config: %{type: :file, file: 'wms.log'},
+              formatter: {:logger_formatter,
+                          %{template: [:time,' ',:pid,' ',:module,' ',:msg,'\n'],
+                            single_line: true,}}}}]
 
 config :n2o,
   pickler: :n2o_secret,
