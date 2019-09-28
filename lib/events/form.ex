@@ -25,6 +25,7 @@ defmodule FORM.Index do
   end
 
   def event({ev, name}) do
+    IO.inspect ev
     NITRO.wire(
       :lists.concat([
         'console.log(\"',
@@ -34,5 +35,8 @@ defmodule FORM.Index do
     )
   end
 
-  def event(_), do: []
+  def event(a) do
+    IO.inspect :x |> NITRO.q() |> NITRO.to_list()
+    IO.inspect :y |> NITRO.q() |> NITRO.to_list()
+  end
 end

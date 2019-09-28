@@ -40,6 +40,7 @@ config :form,
     BPE.Forms.Create,
     BPE.Rows.Trace,
     BPE.Rows.Process,
+    WMS.Forms.Geo,
     WMS.Forms.Error,
     WMS.Rows.Order,
     WMS.Rows.Item
