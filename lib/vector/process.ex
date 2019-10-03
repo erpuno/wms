@@ -39,7 +39,7 @@ defmodule BPE.Rows.Process do
         ),
         panel(
           class: :column6,
-          body: NITRO.to_list(task(BPE.step(process(proc, :task), proc), :module))
+          body: NITRO.to_list(task(BPE.step(proc,process(proc, :task)), :module))
         ),
         panel(
           class: :column20,
@@ -55,7 +55,7 @@ defmodule BPE.Rows.Process do
             :string.join(
               :lists.map(
                 fn x -> NITRO.to_list([:erlang.element(1, x)]) end,
-                task(BPE.step(process(proc, :task), proc), :prompt)
+                task(BPE.step(proc, process(proc, :task)), :prompt)
               ),
               ', '
             )
