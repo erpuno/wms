@@ -17,7 +17,7 @@ defmodule BPE.Rows.Process do
     pid = process(proc, :id)
 
     panel(
-      id: FORM.atom([:tr, name]),
+      id: FORM.atom([:tr, pid]),
       class: :td,
       body: [
         panel(
@@ -46,7 +46,7 @@ defmodule BPE.Rows.Process do
           body:
             case BPE.head(pid) do
               [] -> []
-              x -> NITRO.to_list(:erlang.element(2, hist(x, :task)))
+              xx -> NITRO.jse(NITRO.compact(hist(xx, :task)))
             end
         ),
         panel(

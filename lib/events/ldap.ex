@@ -12,8 +12,9 @@ defmodule LDAP.Index do
   end
 
   def event({:auth, form}) do
-    cn = WMS.extract(:cn, :otp, form)
-    branch = WMS.extract(:branch, :otp, form)
+    cn = WMS.extract(:cn)
+    branch = WMS.extract(:branch)
+    IO.inspect cn
 
     case WMS.auth(cn, branch) do
       {:ok, p} ->

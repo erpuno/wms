@@ -52,16 +52,16 @@ defmodule BPE.Index do
 
   def event({:complete, id, name}) do
     id |> :bpe.load() |> :bpe.start([])
-    :bpe.amend(id, {:order, name})
+    :bpe.complete id
 
     NITRO.update(
-      FORM.atom([:tr, :row, id]),
-      BPE.Rows.Process.new(FORM.atom([:row, id]), :bpe.proc(id))
+      FORM.atom([:tr, id]),
+      BPE.Rows.Process.new([], :bpe.proc(id))
     )
   end
 
   def event({:spawn, x}) do
-    atom = 'process_type_pi_Elixir.BPE.Forms.Create' |> NITRO.q() |> NITRO.to_atom()
+    atom = :process_type |> NITRO.q() |> NITRO.to_atom()
     proc = BPE.process(atom.def(), name: :n2o.user())
 
     id =

@@ -8,6 +8,8 @@ defmodule WMS.Allocation do
   require Record
   Record.defrecord(:allocation, [:path, :item])
 
+  def auth(_), do: true
+
   def clear(proc) do
     feed = '/wms/out/' ++ :nitro.compact(BPE.process(proc, :name))
     things = :kvs.all(feed)
@@ -39,10 +41,10 @@ defmodule WMS.Allocation do
 
   def def() do
     BPE.process(
-      name: "Default Name",
+      name: 'Default Name',
       flows: [
-        BPE.sequenceFlow(source: :Created, target: :Main),
-        BPE.sequenceFlow(source: :Main, target: :Final)
+        BPE.sequenceFlow(name: :First, source: :Created, target: :Main),
+        BPE.sequenceFlow(name: :Second, source: :Main, target: :Final)
       ],
       tasks: [
         BPE.beginEvent(name: :Created, module: WMS.Allocation),
@@ -51,17 +53,18 @@ defmodule WMS.Allocation do
       ],
       beginEvent: :Created,
       endEvent: :Final,
-      events: [BPE.messageEvent(name: :AsyncEvent), BPE.boundaryEvent(name: :*, timeout: {0, {0, 0, 10}})]
+      events: [ BPE.messageEvent(name: :AsyncEvent),
+                BPE.boundaryEvent(name: :*, timeout: BPE.timeout(spec: {0, {10, 0, 10}}))]
     )
   end
 
-  def action({:request, :Created}, proc) do
+  def action({:request, :Created, _}, proc) do
     IO.inspect("CREATED")
     clear(proc)
-    {:reply, BPE.process(proc, docs: [{:open}])}
+    {:reply, proc}
   end
 
-  def action({:request, :Main}, proc) do
+  def action({:request, :Main, _}, proc) do
     case :bpe.doc({:order}, proc) do
       {:order, id} ->
         case findPlacement(id) do
@@ -69,19 +72,19 @@ defmodule WMS.Allocation do
             {:reply, :Final, BPE.process(proc, docs: [{:close}])}
 
           {item, feed, []} ->
-            {:reply, :Main, BPE.process(proc, docs: [{:empty_cell}])}
+            {:reply, :Main, BPE.process(proc, docs: [{:empty_cell},{:order,id}])}
 
           {item, feed, path} ->
             alloc = allocation(path: path, item: item)
             item = ERP."Item"(item, status: :acquired, placement: path)
             :kvs.delete(path, ERP."Item"(item, :id))
             :kvs.append(item, feed)
-            {:reply, :Main, BPE.process(proc, docs: [alloc])}
+            {:reply, :Main, BPE.process(proc, docs: [alloc,{:order,id}])}
         end
     end
   end
 
-  def action({:request, :Final}, proc) do
+  def action({:request, :Final, _}, proc) do
     IO.inspect("FINAL")
     {:stop, proc}
   end

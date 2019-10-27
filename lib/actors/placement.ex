@@ -8,6 +8,8 @@ defmodule WMS.Placement do
   require Record
   Record.defrecord(:placement, [:path, :item])
 
+  def auth(_), do: true
+
   def clear(proc) do
     feed = '/wms/in/' ++ :nitro.compact(BPE.process(proc, :name))
     things = :kvs.all(feed)
@@ -34,8 +36,8 @@ defmodule WMS.Placement do
     BPE.process(
       name: "Default Name",
       flows: [
-        BPE.sequenceFlow(source: :Created, target: :Main),
-        BPE.sequenceFlow(source: :Main, target: :Final)
+        BPE.sequenceFlow(name: :First, source: :Created, target: :Main),
+        BPE.sequenceFlow(name: :Second, source: :Main, target: :Final)
       ],
       tasks: [
         BPE.beginEvent(name: :Created, module: WMS.Placement),
@@ -44,19 +46,21 @@ defmodule WMS.Placement do
       ],
       beginEvent: :Created,
       endEvent: :Final,
-      events: [BPE.messageEvent(name: :AsyncEvent), BPE.boundaryEvent(name: :*, timeout: {0, {0, 0, 10}})]
+      events: [BPE.messageEvent(name: :AsyncEvent),
+               BPE.boundaryEvent(name: :*, timeout: BPE.timeout(spec: {0, {10, 0, 10}}))]
     )
   end
 
-  def action({:request, :Created}, proc) do
+  def action({:request, :Created, _}, proc) do
     IO.inspect("CREATED")
     clear(proc)
-    {:reply, BPE.process(proc, docs: [{:open}])}
+    {:reply, proc}
   end
 
-  def action({:request, :Main}, proc) do
+  def action({:request, :Main, _}, proc) do
     case :bpe.doc({:order}, proc) do
       {:order, id} ->
+            IO.inspect id
         case findPlacement(id) do
           {[], _, _} ->
             {:reply, :Final, BPE.process(proc, docs: [{:close}])}
@@ -67,7 +71,7 @@ defmodule WMS.Placement do
             item = ERP."Item"(item, status: :placed)
             :kvs.append(item, feed)
             :kvs.append(item, path)
-            {:reply, :Main, BPE.process(proc, docs: [place])}
+            {:reply, :Main, BPE.process(proc, docs: [place,{:order,id}])}
         end
 
       [] ->
@@ -75,7 +79,7 @@ defmodule WMS.Placement do
     end
   end
 
-  def action({:request, :Final}, proc) do
+  def action({:request, :Final, _}, proc) do
     IO.inspect("FINAL")
     {:stop, BPE.process(proc, docs: [{:close}])}
   end

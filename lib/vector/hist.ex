@@ -26,18 +26,11 @@ defmodule BPE.Rows.Trace do
       body: [
         panel(
           class: :column6,
-          body: :io_lib.format("~s", [NITRO.to_list(:erlang.element(2, task))])
+          body: NITRO.jse(NITRO.compact(task))
         ),
         panel(
           class: :column20,
-          body:
-            :string.join(
-              :lists.map(
-                fn x -> NITRO.to_list([:erlang.element(1, x)]) end,
-                docs
-              ),
-              ', '
-            )
+          body: NITRO.jse(NITRO.compact(docs))
         )
       ]
     )

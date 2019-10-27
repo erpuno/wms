@@ -1,7 +1,10 @@
 defmodule WMS do
   use N2O, with: [:nitro]
   use FORM
-  def extract(name, path, form), do: [name, path, form] |> FORM.atom() |> NITRO.q() |> NITRO.to_list()
+
+  def extract(name, path, form), do: FORM.atom([name, path, form]) |> NITRO.q() |> NITRO.to_list()
+  def extract(name, path), do: FORM.atom([name, path]) |> NITRO.q() |> NITRO.to_list()
+  def extract(name), do: name |> NITRO.q() |> NITRO.to_list()
 
   def box(mod, r) do
     NITRO.clear(:stand)
@@ -16,6 +19,8 @@ defmodule WMS do
   end
 
   def auth(cn, branch) do
+    IO.inspect cn
+    IO.inspect branch
     case :kvs.get(:PersonCN, cn) do
       {:ok, {:PersonCN, _, acc}} ->
         case :kvs.get(branch, acc) do

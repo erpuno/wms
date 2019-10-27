@@ -114,8 +114,8 @@ defmodule WMS.Index do
   def event({:process, id, type}) do
     {:ok, x} =
       case type do
-        :in -> :bpe.start(BPE.process(WMS.Placement.def(), name: id), [{:placement}])
-        :out -> :bpe.start(BPE.process(WMS.Allocation.def(), name: id), [{:allocation}])
+        :in -> :bpe.start(BPE.process(WMS.Placement.def(), name: id), [{:placement},{:order,id}])
+        :out -> :bpe.start(BPE.process(WMS.Allocation.def(), name: id), [{:allocation},{:order,id}])
       end
 
     :bpe.complete(x)
