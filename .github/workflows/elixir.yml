@@ -3,10 +3,12 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: elixir:1.9.1
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-elixir@v1.0.0
+        with:
+          otp-version: 22.x
+          elixir-version: 1.9.x
     - uses: lpenz/ghaction-cmake@v0.1
     - name: Dependencies
       run: |
