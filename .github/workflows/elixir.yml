@@ -7,7 +7,7 @@ jobs:
       image: elixir:1.9.1
     steps:
     - uses: actions/checkout@v1
-    - uses: docker://lpenz/ghaction-cmake:latest
+    - uses: lpenz/ghaction-cmake@v0.1
     - name: Dependencies
       run: |
         mix local.rebar --force
